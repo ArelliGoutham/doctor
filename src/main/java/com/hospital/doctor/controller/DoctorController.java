@@ -30,9 +30,13 @@ public class DoctorController {
     @GetMapping(value = "/doctor/{id}")
     public ResponseEntity<DoctorResponse> getDoctorDetails(@PathVariable int id) {
         DoctorResponse = service.getDoctor(id);
-        ResponseEntity<DoctorResponse> responseEntity = new ResponseEntity<DoctorResponse>(DoctorResponse,
-                HttpStatus.OK);
-        return responseEntity;
+        if (DoctorResponse != null) {
+            return new ResponseEntity<DoctorResponse>(DoctorResponse,
+                    HttpStatus.OK);
+        } else if (DoctorResponse == null) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @GetMapping(value = "/doctors")
