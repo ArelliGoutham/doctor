@@ -6,5 +6,5 @@ public interface DoctorResponse {
 
     String getSpecialization();
 
-    int getNoOfPatients();
+    String getNoOfPatients();
 }

@@ -14,10 +14,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface DoctorRepo extends JpaRepository<Doctor, Integer> {
 
-    @Query(nativeQuery = true, value = "select d.name as name, d.specialization as specialization, count(p.doctor_id) as noOfPatients from doctor d join patient p on p.doctor_id = d.id where d.id = :id group by d.name")
+    @Query(value = "select d.name as name, d.specialization as specialization, count(p.doctor_id) as noOfPatients from doctor d join patient p on p.doctor_id = d.id where d.id = :id group by d.name", nativeQuery = true)
     public DoctorResponse getDoctorDetails(int id);
 
-    @Query(nativeQuery = true, value = "select id as id, name as name,specialization as specialization from doctor")
+    @Query(value = "select id as id, name as name,specialization as specialization from doctor", nativeQuery = true)
     public List<AllDoctorResponse> getAllDoctors();
 
 }

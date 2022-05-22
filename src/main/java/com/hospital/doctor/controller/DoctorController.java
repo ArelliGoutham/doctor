@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -46,6 +48,25 @@ public class DoctorController {
                 AllDoctorResponse,
                 HttpStatus.OK);
         return responseEntity;
+    }
+
+    @PostMapping(value = "/doctor")
+    public ResponseEntity<Doctor> createDoctor(@RequestBody Doctor entity) {
+        Doctor doctor = new Doctor();
+        doctor = service.saveDoctor(entity);
+        if (doctor != null) {
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    @PostMapping(value = "/doctor/{id}")
+    public ResponseEntity<Doctor> validateDoctor(@PathVariable int id) {
+        boolean status = service.validateDoctor(id);
+        if (status) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
 }
